@@ -1,4 +1,4 @@
-from CalcoloPesoMolecolare import calcoloPesoMolecolare
+from CalcoloPesoMolecolare import run
 
 if __name__ == '__main__':
-   calcoloPesoMolecolare()
+    run()

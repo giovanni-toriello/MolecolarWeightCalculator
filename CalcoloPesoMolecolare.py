@@ -4,14 +4,12 @@ from DataSetElementi import dataSetElementi
 
 
 def calcoloPesoMolecolare(composto):
-    elementiSingoli = []
     elementiSingoli = compostoSplitted(composto)
     # Inizializzo il peso molecolare
     pesoMolecolare = 0
     # Ciclo for per calcolare il peso
     for i in range(0, len(elementiSingoli)):
         # Ogni ciclo metto a 0 il valore dell'elemento che considero
-        valoreElemento = 0
         # Controllo se c'è un numero nella stringa
         # True: moltiplico per il valore del componente
         if any(chr.isdigit() for chr in elementiSingoli[i]):
@@ -33,7 +31,6 @@ def calcoloPesoMolecolare(composto):
 
 
 def compostoSplitted(composto):
-    compostoSplitted = []
     # Splitting dei componenti del composto tramite regex
     # Appena vede una lettera maiuscola divide la stringa
     compostoSplitted = re.findall('[A-Z][^A-Z]*', composto)
@@ -41,11 +38,8 @@ def compostoSplitted(composto):
 
 
 def run():
-    x = 0
-    while (x < 1):
+    calcoloPesoMolecolare(input("Inserisci Composto:\n"))
+    while input("\nVuoi continuare?\n[y/n]\n") =='y':
         calcoloPesoMolecolare(input("Inserisci Composto:\n"))
-        continua = input("\nVuoi continuare?\n[y/n]\n")
-        if (continua == 'n'):
-            print("\nTermino esecuzione...")
-            sleep(1)
-            x = 1
+    print("\nTermino esecuzione...")
+    sleep(1)

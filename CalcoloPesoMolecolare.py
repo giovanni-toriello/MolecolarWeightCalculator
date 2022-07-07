@@ -4,26 +4,26 @@ from DataSetElementi import dataSetElementi
 
 
 def calcoloPesoMolecolare(composto):
-    dummy = []
-    dummy = compostoSplitted(composto)
+    elementiSingoli = []
+    elementiSingoli = compostoSplitted(composto)
     # Inizializzo il peso molecolare
     pesoMolecolare = 0
     # Ciclo for per calcolare il peso
-    for i in range(0, len(dummy)):
+    for i in range(0, len(elementiSingoli)):
         # Ogni ciclo metto a 0 il valore dell'elemento che considero
         valoreElemento = 0
         # Controllo se c'è un numero nella stringa
         # True: moltiplico per il valore del componente
-        if any(chr.isdigit() for chr in dummy[i]):
-            pedice = re.split('(\d+)', dummy[i])
+        if any(chr.isdigit() for chr in elementiSingoli[i]):
+            pedice = re.split('(\d+)', elementiSingoli[i])
             valoreElemento = eval(pedice[1]) * dataSetElementi[pedice[0]][1]
             # Stampa elemento considerato
             print(dataSetElementi[pedice[0]])
         # False: Sommo normalmente
         else:
-            valoreElemento = dataSetElementi[dummy[i]][1]
+            valoreElemento = dataSetElementi[elementiSingoli[i]][1]
             # Stampa elemento considerato
-            print(dataSetElementi[dummy[i]])
+            print(dataSetElementi[elementiSingoli[i]])
         # Calcolo i valore dei componenti che compongono il composto
         pesoMolecolare = pesoMolecolare + valoreElemento
     print("Calcolo il peso molecolarem di " + composto + "...")

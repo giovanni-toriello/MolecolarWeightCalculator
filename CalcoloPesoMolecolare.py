@@ -1,6 +1,24 @@
-from time import sleep
 import re
-from DataSetElementi import dataSetElementi
+from urllib.request import urlopen
+import json
+
+data_json = json.loads(
+    urlopen("https://periodic-table-elements-info.herokuapp.com/elements").read())  # lettura del dizionario
+atomicMass = [data["atomicMass"] for data in data_json]  # si legge la massa atomica
+name = [data["name"] for data in data_json]  # si legge il nome
+name = [data["name"] for data in data_json]
+
+dataSetElementi = {}
+for data in data_json:  # dati i dati nell'url json
+    try:
+        atomicMass = data["atomicMass"][0:5].replace('[', '').replace(']',
+                                                                      '')  # vengono presi i dati di massa atomica e vengono sostituite le parentesi quadre
+        name = data["name"]  # vengono presi i dati del nome
+        symbol = data["symbol"]  # vengono presi i simboli
+        dataSetElementi.update(
+            {symbol: [name, float(atomicMass.replace('[', '').replace(']', ''))]})  # vengono compresi i 3 elementi
+    except:
+        continue
 
 
 def calcoloPesoMolecolare(composto):
@@ -15,6 +33,7 @@ def calcoloPesoMolecolare(composto):
         if any(chr.isdigit() for chr in elementiSingoli[i]):
             pedice = re.split('(\d+)', elementiSingoli[i])
             valoreElemento = eval(pedice[1]) * dataSetElementi[pedice[0]][1]
+            print("\n")
             # Stampa elemento considerato
             print(dataSetElementi[pedice[0]])
         # False: Sommo normalmente
@@ -24,9 +43,8 @@ def calcoloPesoMolecolare(composto):
             print(dataSetElementi[elementiSingoli[i]])
         # Calcolo i valore dei componenti che compongono il composto
         pesoMolecolare = pesoMolecolare + valoreElemento
+    print("\n")
     print("Calcolo il peso molecolarem di " + composto + "...")
-    # Puoi anche togliere questa sleep è per farlo aspettare mentre calcola
-    sleep(0.7)
     print("Il peso molecolare di " + composto + " è uguale a: " + str(pesoMolecolare) + " g/mol")
 
 
@@ -38,8 +56,7 @@ def compostoSplitted(composto):
 
 
 def run():
-    calcoloPesoMolecolare(input("Inserisci Composto:\n"))
-    while input("\nVuoi continuare?\n[y/n]\n") =='y':
+    calcoloPesoMolecolare(input("Inserisci Composto:"))
+    while input("\nVuoi continuare?\n[y/n]\n") == 'y':
         calcoloPesoMolecolare(input("Inserisci Composto:\n"))
     print("\nTermino esecuzione...")
-    sleep(1)
